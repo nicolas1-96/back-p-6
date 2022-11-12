@@ -1,10 +1,12 @@
 /* Import des modules necessaires */
+//importation models de la base de donnée user.js
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config({ encoding: "latin1" });
 
 /* Controleur inscription */
+//signup pour enregistrer le nouvel utilisateur dans la base de donnée
 exports.signup = (req, res, next) => {
     // Hashage du mot de passe utilisateur
     bcrypt

@@ -1,12 +1,22 @@
+//importation de express
 const express = require('express');
 const bodyParser = require('body-parser');
+//importation de mongosse pour connecter a la base de donnée mongoDB
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
+//importation morgan (logger http)
 const morgan = require('morgan');
 const helmet = require('helmet');
 require('dotenv').config();
 const session = require('express-session');
+//importation morgan (logger http)
+
+// Lancement de Express
+const app = express();
+
+//logger les requests et les reponse 
+app.use(morgan("dev"));
 
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
@@ -18,14 +28,13 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER }:${process.env.DB_PASSWOR
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch((error) => console.log(error));
 
-// Lancement de Express
-const app = express();
+
 
 
 /**
  * MIDDLEWARES
  */
-// Configuration cors
+// Configuration cors, route general et la fontion (middleware)
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin',process.env.AUTHORIZED_ORIGIN );
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -35,9 +44,7 @@ app.use((req, res, next) => {
 });
 // Parse le body des requetes en json
 app.use(bodyParser.json());
-// Log toutes les requêtes passées au serveur (sécurité)
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
-app.use(morgan('combined', { stream: accessLogStream }));
+
 // Sécurise les headers
 app.use(helmet());
 
@@ -49,4 +56,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 
+
+//exportation de app.js pour pouvoir y accéder depuis un autre fichier
 module.exports = app;
