@@ -3,11 +3,13 @@ const express = require('express');
 //la fontion router()
 const router = express.Router();
 
-//importations du controllers/sauce.js
+//importations du controllers/sauce.js la logique des routes
 const sauceCtrl = require('../controllers/sauce');
-//importation du middleware d'authentification
+// importation du middleware authentification qui protège les routes
 const auth = require('../middlewares/auth');
+// on importer multer pour ajout d'image
 const multer = require('../middlewares/multer-config');
+
 const validate = require('../middlewares/validate-inputs');
 
 //les routes

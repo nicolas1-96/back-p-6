@@ -6,6 +6,7 @@ const router = express.Router();
 
 //importation du controllers/user.js
 const userCtrl = require('../controllers/user.js');
+//importation du middleware/validate-inputs
 const validate = require('../middlewares/validate-inputs');
 
 //la route (endpoint) signup

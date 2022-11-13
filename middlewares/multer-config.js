@@ -24,4 +24,6 @@ const storage = multer.diskStorage({
     }
 })
 //exportation du module middleware multer
+// on exporte le fichier via multer qui possede l'objet storage puis .single signifie fichier unique (pas un groupe de fichiers) en disant que c'est un fichier 'image'
+// ce nom de fichier sera la key dans form-data de postman (insert File)
 module.exports = multer({ storage }).single('image');

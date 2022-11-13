@@ -8,7 +8,9 @@ const path = require('path');
 const fs = require('fs');
 //importation morgan (logger http)
 const morgan = require('morgan');
+// importation de helmet, il est utilisé pour sécuriser vos en-têtes
 const helmet = require('helmet');
+// importation de dotenv qui stocke des variables d'environnement et ça servira pour l'appel mongodb en dessous.
 require('dotenv').config();
 const session = require('express-session');
 //importation morgan (logger http)
