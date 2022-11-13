@@ -1,7 +1,8 @@
 //importation de express
 const express = require('express');
+//importation de body-Parser
 const bodyParser = require('body-parser');
-//importation de mongosse pour connecter a la base de donnée mongoDB
+//importation de mongosse pour c'est connecter a la base de donnée mongoDB
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
@@ -12,12 +13,13 @@ require('dotenv').config();
 const session = require('express-session');
 //importation morgan (logger http)
 
-// Lancement de Express
+// Lancement de Express pour créer une aplication express
 const app = express();
 
 //logger les requests et les reponse 
 app.use(morgan("dev"));
 
+//importation des routes
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
@@ -34,7 +36,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER }:${process.env.DB_PASSWOR
 /**
  * MIDDLEWARES
  */
-// Configuration cors, route general et la fontion (middleware)
+// Configuration cors, gerer les problemes de CORS(Cross-Origin-Request-Sharing)
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin',process.env.AUTHORIZED_ORIGIN );
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -42,7 +44,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
-// Parse le body des requetes en json
+// transformer le CORPS (le body) en json objet javascript utilisable
 app.use(bodyParser.json());
 
 // Sécurise les headers
@@ -53,7 +55,9 @@ app.use(helmet());
  * ROUTES
  */
 app.use('/images', express.static(path.join(__dirname, 'images')));
+//la route des sauces
 app.use('/api/sauces', sauceRoutes);
+//la route d'authentification 
 app.use('/api/auth', userRoutes);
 
 

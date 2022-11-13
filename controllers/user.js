@@ -3,7 +3,8 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv").config({ encoding: "latin1" });
+const dotenv = require("dotenv");
+const result = dotenv.config();
 
 /* Controleur inscription */
 //signup pour enregistrer le nouvel utilisateur dans la base de donnée
@@ -27,23 +28,29 @@ exports.signup = (req, res, next) => {
 
 /* Controleur login */
 exports.login = (req, res, next) => {
-    // Verification utilisateur existant
+    // cherche dans la basse de donnée si l'utilisateur est bien present avec findOne
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (!user) {
                 return res.status(401).json({ error: "Utilisateur non trouvé !" });
             }
-            // Verification mot de passe utilisateur
+            // controler la validité du mot de passe de l'utilisateur envoyer par le front
             bcrypt
                 .compare(req.body.password, user.password)
                 .then((valid) => {
+                    //si le mot de passe est incorrect
                     if (!valid) {
                         return res.status(401).json({ error: "Mot de passe incorrect !" });
                     }
-                    // Connexion valide = token 24H
+                    // envoie dans la response du serveur du userId et du token d'authentification
                     res.status(200).json({
+                        //encodage du userId pour la creation de nouveau objet (objet et userId seront liés)
                         userId: user._id,
-                        token: jwt.sign({ userId: user._id }, "secret", {
+                        token: jwt.sign(
+                            //3 arguments
+                            { userId: user._id }, 
+                            `${process.env.TOKEN_KEY}`, {
+                            // Connexion valide = token 1H
                             expiresIn: "1h",
                         }),
                     });

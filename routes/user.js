@@ -10,6 +10,7 @@ const validate = require('../middlewares/validate-inputs');
 
 //la route (endpoint) signup
 router.post('/signup', validate.user, userCtrl.signup);
+//la route (endpoint) login
 router.post('/login', validate.user, userCtrl.login);
 
 module.exports = router;

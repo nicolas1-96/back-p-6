@@ -1,3 +1,4 @@
+//importation du models  de la base de donnée mongoDB
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
@@ -23,6 +24,7 @@ exports.getOneSauce = (req, res, next) => {
  * CRÉER UNE SAUCE
  */
 exports.createSauce = (req, res, next) => {
+    
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     const sauce = new Sauce({
@@ -31,6 +33,7 @@ exports.createSauce = (req, res, next) => {
         likes: 0,
         dislikes: 0
     });
+    //enregistrer l'objet dans la base de donnée
     sauce.save()
         .then(() => res.status(201).json({ message: 'Sauce enregistrée !'}))
         .catch(error => {

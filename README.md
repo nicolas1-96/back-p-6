@@ -38,10 +38,12 @@ Développement Backend en Javascript
     - Lancer: **ng serve**
 
 3. Ajouter un fichier de configuration nommé **".env"** à la racine du backend. A l'intérieur, 5 variables d'environnement "secrètes" seront définies:
-    - MONGODB_PATH = 'lien_vers_la_base_de_données_mongoDB'
+    - DB_USER = 'user_base_de_donnée'
     - TOKEN_KEY = 'clé_secrète_pour_crypter_les_tokens'
     - EMAIL_KEY = 'clé_secrète_pour_crypter_les_emails'
-    - COOKIE_KEY = 'clé_secrète_pou_la_session'
+    - DB_PASSWORD  = 'password_de_la_base_de_donnée'
+    - DB_cluster  = 'cluster_de_la_base_de_donnée'
+    - PORT  = '3000'
     - AUTHORIZED_ORIGIN = 'http://localhost:4200'
 4. Lancer le backend
     - Dans un autre terminal, accéder au dossier du backend

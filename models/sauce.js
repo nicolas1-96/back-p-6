@@ -1,5 +1,7 @@
+//importation de mongoose
 const mongoose = require('mongoose');
 
+//le models: donnée sauces pour la page du frond-end
 const sauceSchema = mongoose.Schema({
     userId: { type: String, required: true },
     name: { type: String, required: true },
@@ -14,4 +16,5 @@ const sauceSchema = mongoose.Schema({
     usersDisliked: { type: Array, required: true }
 });
 
+//importation du module
 module.exports = mongoose.model('Sauce', sauceSchema);
